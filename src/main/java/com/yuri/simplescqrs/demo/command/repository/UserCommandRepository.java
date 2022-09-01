@@ -3,6 +3,7 @@ package com.yuri.simplescqrs.demo.command.repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 
@@ -57,12 +58,19 @@ public class UserCommandRepository {
 
 //        this.namedParameterJdbcOperations.update(sql, params);
 
-        final Long userId = this.namedParameterJdbcOperations.query(sql, params, resultSet -> {
-            resultSet.next();
-            long resultId = resultSet.getLong("id");
+        final ResultSetExtractor<Long> extractor = resultSet -> {
 
-            return resultId;
-            });
+            if (resultSet.next()) {
+                long resultId = resultSet.getLong("id");
+
+                return resultId;
+            }
+
+            return null;
+        };
+
+
+        final Long userId = this.namedParameterJdbcOperations.query(sql, params, extractor);
 
         LOGGER.info("Atualizado com sucesso!");
 
@@ -72,7 +80,7 @@ public class UserCommandRepository {
     }
 
     public Long delete(Long id) {
-        final String sql = "UPDATE t_users SET data_remocao = now() where data_remocao IS NULL AND id = :id";
+        final String sql = "UPDATE t_users SET data_remocao = now() where data_remocao IS NULL AND id = :id RETURNING id";
 
         LOGGER.info("Atualizando usuario");
 
@@ -81,12 +89,25 @@ public class UserCommandRepository {
 
 //        this.namedParameterJdbcOperations.update(sql, params);
 
-        final Long userId = this.namedParameterJdbcOperations.query(sql, params, resultSet -> {
-            resultSet.next();
-            long resultId = resultSet.getLong("id");
+        final ResultSetExtractor<Long> extractor = resultSet -> {
 
-            return resultId;
-        });
+            if (resultSet.next()) {
+                long resultId = resultSet.getLong("id");
+
+                return resultId;
+            }
+
+            return null;
+        };
+
+        final Long userId = this.namedParameterJdbcOperations.query(sql, params, extractor);
+
+//        resultSet -> {
+//            resultSet.next();
+//            long resultId = resultSet.getLong("id");
+//
+//            return resultId;
+//        }
 
         LOGGER.info("Atualizado com sucesso!");
 

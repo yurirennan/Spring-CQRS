@@ -35,7 +35,7 @@ public class JobSync {
         this.mongoTemplate = mongoTemplate;
     }
 
-    @Scheduled(fixedDelay = 30000)
+    @Scheduled(fixedDelay = 10000)
     public void scheduleFixedDelayTask() {
         LOGGER.info("Begin Job");
         List<ControleDTO> operationsNotSync = this.getOperationsNotSync();
