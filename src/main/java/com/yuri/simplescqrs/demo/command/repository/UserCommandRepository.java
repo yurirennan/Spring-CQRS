@@ -41,8 +41,6 @@ public class UserCommandRepository {
         LOGGER.info("Inserindo com sucesso!");
 
         return id;
-
-//        this.updateControleTable(User.TABLE_NAME, id, DatabaseOperations.CREATE.toString(), false);
     }
 
 
@@ -56,8 +54,6 @@ public class UserCommandRepository {
         params.put("name", name);
         params.put("lastName", lastName);
 
-//        this.namedParameterJdbcOperations.update(sql, params);
-
         final ResultSetExtractor<Long> extractor = resultSet -> {
 
             if (resultSet.next()) {
@@ -75,8 +71,6 @@ public class UserCommandRepository {
         LOGGER.info("Atualizado com sucesso!");
 
         return userId;
-
-//        this.updateControleTable(User.TABLE_NAME, id, DatabaseOperations.UPDATE.toString(), false);
     }
 
     public Long delete(Long id) {
@@ -87,8 +81,6 @@ public class UserCommandRepository {
         final Map<String, Object> params = new HashMap<>();
         params.put("id", id);
 
-//        this.namedParameterJdbcOperations.update(sql, params);
-
         final ResultSetExtractor<Long> extractor = resultSet -> {
 
             if (resultSet.next()) {
@@ -102,33 +94,8 @@ public class UserCommandRepository {
 
         final Long userId = this.namedParameterJdbcOperations.query(sql, params, extractor);
 
-//        resultSet -> {
-//            resultSet.next();
-//            long resultId = resultSet.getLong("id");
-//
-//            return resultId;
-//        }
-
         LOGGER.info("Atualizado com sucesso!");
 
         return userId;
-
-//        this.updateControleTable(User.TABLE_NAME, id, DatabaseOperations.DELETE.toString(), false);
     }
-
-//    private void updateControleTable(String tableName, Long idRecurso, String tipoAlteracao, Boolean sync) {
-//        final String sql = "INSERT INTO t_controle(table_name, id_recurso, tipo_alteracao, sincronizado) VALUES(:tableName, :idRecurso, :tipoAlteracao, :sincronizado)";
-//
-//        LOGGER.info("Inserindo em t_controle");
-//
-//        final Map<String, Object> params = new HashMap<>();
-//        params.put("tableName", tableName);
-//        params.put("idRecurso", idRecurso);
-//        params.put("tipoAlteracao", tipoAlteracao);
-//        params.put("sincronizado", sync);
-//
-//        this.namedParameterJdbcOperations.update(sql, params);
-//
-//        LOGGER.info("Inserindo com sucesso!");
-//    }
 }

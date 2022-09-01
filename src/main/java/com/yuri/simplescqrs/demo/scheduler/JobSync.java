@@ -126,15 +126,6 @@ public class JobSync {
             mongoTemplate.updateFirst(query, update, User.class, "users");
             this.userQueryRepository.updateByUserId(idToSync);
 
-            /**
-             * Original
-             */
-//            Optional<User> userOptional = this.userQueryRepository.findByUserId(dataNotSync.getUserId());
-//            User user = userOptional.get();
-//            user.setName(dataNotSync.getName());
-//            user.setLastName(dataNotSync.getLastName());
-//            this.userQueryRepository.save(user);
-
             this.updateTableControleSetSyncTrue(idToSync);
         }
     }
