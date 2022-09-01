@@ -15,7 +15,4 @@ public interface UserQueryRepository extends MongoRepository<User, Long> {
 
     @Query(value="{userId : ?0}", delete = true)
     void deleteByUserId(Long id);
-
-    @Query(value = "{userId : ?0}")
-    Optional<User> updateByUserId(Long id);
 }
