@@ -30,7 +30,7 @@ public class UserCommandService {
         Long userId = this.commandRepository.update(id, name, lastName);
 
         if (userId == null) {
-            throw new UpdateUserException("Execeção de update");
+            throw new UpdateUserException("Usuario não encontrado!");
         }
 
         this.controleTableRepository.updateControleTable(User.TABLE_NAME, userId, DatabaseOperations.UPDATE.toString(), false);
@@ -40,7 +40,7 @@ public class UserCommandService {
         Long userId = this.commandRepository.delete(id);
 
         if (userId == null) {
-            throw new DeleteUserException("Execeção de delete");
+            throw new DeleteUserException("Usuario não encontrado!");
         }
 
         this.controleTableRepository.updateControleTable(User.TABLE_NAME, userId, DatabaseOperations.DELETE.toString(), false);

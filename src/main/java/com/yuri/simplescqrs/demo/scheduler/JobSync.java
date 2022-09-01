@@ -124,7 +124,6 @@ public class JobSync {
             update.set("lastName", user.getLastName());
 
             mongoTemplate.updateFirst(query, update, User.class, "users");
-            this.userQueryRepository.updateByUserId(idToSync);
 
             this.updateTableControleSetSyncTrue(idToSync);
         }
